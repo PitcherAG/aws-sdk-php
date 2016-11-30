@@ -290,7 +290,7 @@ class Transfer implements PromisorInterface
                 ->getPaginator('ListObjects', $listArgs)
                 ->search('Contents[].Key');
             $files = Aws\map($files, function ($key) use ($listArgs) {
-                return "s3://{$listArgs['Bucket']}/$key";
+                return "s3://{$listArgs['Bucket']}/" . urldecode($key);
             });
             return Aws\filter($files, function ($key) {
                 return substr($key, -1, 1) !== '/';
